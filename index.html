@@ -1,0 +1,756 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head><link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#071426">
+<meta name="mobile-web-app-capable" content="yes">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071426">
+<title>F-TECH | Technology Simplified</title>
+
+<style>
+:root{
+--bg:#071426;--panel:#10243d;--card:#132b47;
+--blue:#168cff;--cyan:#29d5ed;--text:#f4f8ff;
+--muted:#9aafc7;--line:#263f5d;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.6}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+header{
+position:sticky;top:0;z-index:10;background:#071426f5;
+border-bottom:1px solid var(--line);padding:12px 5%;
+display:flex;align-items:center;justify-content:space-between;gap:15px;
+}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:21px}
+.logo{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#071426;
+width:36px;height:36px;border-radius:10px;display:grid;place-items:center}
+nav{display:flex;gap:5px;flex-wrap:wrap}
+nav button{background:transparent;color:var(--muted);border:0;padding:8px 10px;border-radius:7px;font-size:13px}
+nav button:hover,nav button.active{background:var(--panel);color:white}
+.container{width:min(1120px,92%);margin:auto}
+main{padding:25px 0 60px}
+.page{display:none}.page.active{display:block}
+.hero{
+background:linear-gradient(120deg,#102b4b,#0c1d34);
+border:1px solid var(--line);border-radius:18px;padding:42px 35px;
+display:grid;grid-template-columns:1.5fr 1fr;gap:25px;align-items:center;
+}
+.eyebrow{color:var(--cyan);font-size:12px;font-weight:bold;letter-spacing:2px}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.15;margin:12px 0}
+h2{font-size:24px;margin-bottom:8px}
+h3{font-size:16px}
+p{color:var(--muted);font-size:14px}
+.btn{border:0;border-radius:8px;background:var(--blue);color:white;padding:11px 17px;font-weight:bold}
+.btn.secondary{background:var(--panel);border:1px solid var(--line)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.hero-actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.hero-art{background:#0b1b30;border:1px solid #294969;border-radius:15px;padding:25px}
+.hero-art .big{font-size:65px;font-weight:900;color:var(--cyan);text-align:center}
+.hero-art p{text-align:center}
+.section{margin-top:32px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px;min-width:0;transition:.2s}
+.card:hover{border-color:var(--blue);transform:translateY(-2px)}
+.card .emoji{font-size:24px;margin-bottom:10px}
+.card h3{margin-bottom:5px}
+.card p{font-size:13px}
+.card button{margin-top:13px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.stat{background:var(--panel);padding:16px;border:1px solid var(--line);border-radius:12px}
+.stat strong{display:block;font-size:25px;color:var(--cyan)}
+.stat span{color:var(--muted);font-size:12px}
+.page-title{margin-bottom:20px}
+.page-title p{margin-top:5px}
+.content-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.tool-area{margin-top:18px;background:var(--panel);border:1px solid var(--line);padding:20px;border-radius:13px}
+.field{display:grid;gap:6px;margin:12px 0}
+input,textarea,select{width:100%;padding:11px;border-radius:8px;border:1px solid var(--line);background:#091a2e;color:white}
+textarea{min-height:100px;resize:vertical}
+.result{color:var(--cyan);font-weight:bold;margin-top:12px;overflow-wrap:anywhere}
+.article{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:12px}
+.article small{color:var(--cyan)}
+.article h3{margin:7px 0}
+.article button{margin-top:10px}
+footer{border-top:1px solid var(--line);padding:25px 5%;text-align:center;color:var(--muted);font-size:12px}
+.notice{padding:12px;border:1px solid var(--line);border-radius:9px;color:var(--muted);font-size:13px;margin-top:14px}
+.learning-search{margin-bottom:18px}
+.lesson-topic{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.lesson-topic button{flex-shrink:0}
+.progress-track{height:9px;background:#071426;border-radius:20px;overflow:hidden;margin:12px 0}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));width:0}
+.quiz-option{display:block;width:100%;text-align:left;background:#091a2e;color:white;border:1px solid var(--line);padding:12px;border-radius:8px;margin:8px 0}
+.quiz-option:hover{border-color:var(--cyan)}
+.quiz-option.selected{border-color:var(--cyan);background:#153653}
+.quiz-option.correct{border-color:#22c55e}
+.quiz-option.wrong{border-color:#ef4444}
+@media(max-width:800px){
+header{align-items:flex-start;flex-direction:column}
+nav{width:100%;overflow-x:auto;flex-wrap:nowrap}
+nav button{white-space:nowrap}
+.hero{grid-template-columns:1fr;padding:27px 20px}
+.hero-art{display:none}
+.grid{grid-template-columns:repeat(2,1fr)}
+.content-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+.container{width:94%}
+.grid,.content-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.card{padding:13px}
+.stats{gap:7px}
+.stat{padding:11px}
+.stat strong{font-size:20px}
+h2{font-size:21px}
+.lesson-topic{align-items:flex-start;flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+<header>
+<div class="brand"><span class="logo">F</span> F-TECH</div>
+<nav id="navigation">
+<button class="active" onclick="showPage('home',this)">Home</button>
+<button onclick="showPage('tools',this)">Tools</button>
+<button onclick="showPage('learning',this)">Learning</button>
+<button onclick="showPage('updates',this)">Updates</button>
+<button onclick="showPage('community',this)">Community</button>
+<button onclick="showPage('founder',this)">Founder</button>
+</nav>
+</header>
+
+<main class="container">
+
+<!-- HOME -->
+<section id="home" class="page active">
+<div class="hero">
+<div>
+<div class="eyebrow">WELCOME TO F-TECH</div>
+<h1>Technology made simple.</h1>
+<p>Your digital space to learn new skills, discover useful tools and explore the world of technology.</p>
+<div class="hero-actions">
+<button class="btn" onclick="showPage('learning')">Start learning →</button>
+<button class="btn secondary" onclick="showPage('tools')">Explore tools</button>
+</div>
+</div>
+<div class="hero-art">
+<div class="big">F</div>
+<p>INNOVATION · LEARNING · TECHNOLOGY</p>
+</div>
+</div>
+
+<div class="stats">
+<div class="stat"><strong>01</strong><span>Learn and grow</span></div>
+<div class="stat"><strong>02</strong><span>Explore digital tools</span></div>
+<div class="stat"><strong>03</strong><span>Stay informed</span></div>
+</div>
+
+<div class="section">
+<div class="section-head"><h2>Explore F-TECH</h2><p>Your digital journey</p></div>
+<div class="grid">
+<div class="card"><div class="emoji">📚</div><h3>Learning Hub</h3><p>Build your digital and academic skills.</p><button class="btn" onclick="showPage('learning')">Explore</button></div>
+<div class="card"><div class="emoji">🛠️</div><h3>Digital Tools</h3><p>Useful tools for everyday tasks.</p><button class="btn" onclick="showPage('tools')">Explore</button></div>
+<div class="card"><div class="emoji">🌐</div><h3>Tech Updates</h3><p>Discover technology news and ideas.</p><button class="btn" onclick="showPage('updates')">Explore</button></div>
+<div class="card"><div class="emoji">👥</div><h3>Community</h3><p>Connect with technology enthusiasts.</p><button class="btn" onclick="showPage('community')">Explore</button></div>
+</div>
+</div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools" class="page">
+<div class="page-title"><h2>Digital Tools</h2><p>Simple utilities designed to make work easier.</p></div>
+<div class="content-grid">
+<div class="card"><div class="emoji">💰</div><h3>Budget Calculator</h3><p>Calculate income, expenses and balance.</p><button class="btn" onclick="openTool('budget')">Open tool</button></div>
+<div class="card"><div class="emoji">🔐</div><h3>Password Generator</h3><p>Generate a random strong password.</p><button class="btn" onclick="openTool('password')">Open tool</button></div>
+<div class="card"><div class="emoji">📏</div><h3>Unit Converter</h3><p>Convert metres, kilometres and centimetres.</p><button class="btn" onclick="openTool('converter')">Open tool</button></div>
+<div class="card"><div class="emoji">📝</div><h3>Quick Notes</h3><p>Write and save notes in this browser.</p><button class="btn" onclick="openTool('notes')">Open tool</button></div>
+</div>
+<div id="toolArea" class="tool-area" style="display:none"></div>
+</section>
+
+<!-- LEARNING HUB -->
+<section id="learning" class="page">
+<div class="page-title">
+<div class="eyebrow">F-TECH EDUCATION</div>
+<h2>Learning Hub</h2>
+<p>Learn, practise and improve your skills. Open a subject to explore its lessons.</p>
+</div>
+
+<div class="stats">
+<div class="stat"><strong id="lessonCount">0</strong><span>Lessons completed</span></div>
+<div class="stat"><strong id="quizBest">0%</strong><span>Best quiz score</span></div>
+<div class="stat"><strong>FREE</strong><span>Learning resources</span></div>
+</div>
+
+<div class="section">
+<div class="section-head">
+<h2>Explore subjects</h2>
+<span style="color:var(--cyan);font-size:12px">All learners welcome</span>
+</div>
+<input class="learning-search" id="learningSearch" placeholder="Search subjects..." oninput="searchLearning()">
+<div class="grid" id="subjectGrid"></div>
+</div>
+
+<div class="section">
+<div class="section-head">
+<h2>Learning progress</h2>
+<span id="progressText" style="color:var(--cyan)">0% completed</span>
+</div>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+<p>Progress is saved on this device.</p>
+</div>
+
+<div class="section">
+<div class="section-head"><h2>Test your knowledge</h2></div>
+<div class="card">
+<div class="emoji">📝</div>
+<h3>Practice Quiz</h3>
+<p>Answer questions from different learning subjects and check your score instantly.</p>
+<button class="btn" onclick="startQuiz()">Start quiz</button>
+</div>
+</div>
+
+<div id="learningContent" class="tool-area" style="display:none"></div>
+</section>
+
+<!-- UPDATES -->
+<section id="updates" class="page">
+<div class="page-title"><h2>Tech Updates</h2><p>Technology ideas, announcements and discoveries.</p></div>
+<div id="articles"></div>
+<div class="notice">Posts published here are saved only in this browser. They are not automatically shared with other visitors.</div>
+<div class="tool-area">
+<h3>Publish an update</h3>
+<div class="field"><label>Article title</label><input id="postTitle" placeholder="Enter title"></div>
+<div class="field"><label>Article content</label><textarea id="postBody" placeholder="Write your update"></textarea></div>
+<button class="btn" onclick="publishPost()">Publish update</button>
+</div>
+</section>
+
+<!-- COMMUNITY -->
+<section id="community" class="page">
+<div class="page-title"><h2>F-TECH Community</h2><p>A place for learners, creators and technology enthusiasts.</p></div>
+<div class="grid">
+<div class="card"><div class="emoji">💡</div><h3>Share ideas</h3><p>Discuss technology and creative projects.</p></div>
+<div class="card"><div class="emoji">🤝</div><h3>Connect</h3><p>Meet other people interested in technology.</p></div>
+<div class="card"><div class="emoji">🚀</div><h3>Build</h3><p>Turn ideas into practical projects.</p></div>
+<div class="card"><div class="emoji">🎓</div><h3>Learn together</h3><p>Share knowledge and support beginners.</p></div>
+</div>
+<div class="tool-area">
+<h3>Join the conversation</h3>
+<p>Community discussions and member accounts will be connected in a future release.</p>
+<button class="btn" onclick="contactUs()">Contact F-TECH</button>
+</div>
+</section>
+
+<!-- FOUNDER -->
+<section id="founder" class="page">
+<div class="page-title"><h2>About the Founder</h2><p>The person behind F-TECH.</p></div>
+<div class="card" style="max-width:650px">
+<div class="emoji">👨‍💻</div>
+<div class="eyebrow">FOUNDER & CEO</div>
+<h2>Felix Mitema</h2>
+<p>Aspiring software developer and IT student at the University of Eldoret, Kenya.</p>
+<div class="notice">
+<p><strong>Email:</strong> mitemafelix5@gmail.com</p>
+<p><strong>Location:</strong> Eldoret, Kenya</p>
+<p><strong>Vision:</strong> Making technology and digital learning more accessible.</p>
+</div>
+<button class="btn" onclick="contactUs()">Contact founder</button>
+</div>
+</section>
+
+<!-- OWNER -->
+<section id="owner" class="page">
+<div class="page-title"><h2>Owner Dashboard</h2><p>F-TECH administration overview.</p></div>
+<div class="grid">
+<div class="stat"><strong id="visitCount">0</strong><span>Visits on this browser</span></div>
+<div class="stat"><strong id="postCount">0</strong><span>Saved articles</span></div>
+<div class="stat"><strong>Active</strong><span>Website status</span></div>
+</div>
+<div class="notice">These figures are local browser demonstrations, not verified total website visitors. This dashboard is not protected by secure authentication.</div>
+<button class="btn secondary" onclick="showPage('home')">Back to home</button>
+</section>
+
+</main>
+
+<footer>
+<div class="brand" style="justify-content:center"><span class="logo">F</span> F-TECH</div>
+<p style="margin-top:8px">Technology · Innovation · Learning</p>
+<p style="margin-top:5px">© <span id="year"></span> F-TECH. All rights reserved.</p>
+<button class="btn secondary" style="margin-top:12px" onclick="showPage('owner')">Owner area</button>
+</footer>
+
+<script>
+
+// NAVIGATION
+function showPage(id,button){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+const page=document.getElementById(id);
+if(!page)return;
+page.classList.add('active');
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+if(button)button.classList.add('active');
+window.scrollTo({top:0,behavior:'smooth'});
+if(id==='owner')refreshOwner();
+if(id==='learning')refreshLearning();
+}
+
+// SUBJECT AND LESSON DATA
+const subjects=[
+{
+name:'Mathematics',icon:'📐',category:'Academic',
+description:'Numbers, algebra, geometry and problem solving.',
+topics:[
+['Algebra','Algebra uses letters and symbols to represent unknown numbers. Example: if x + 3 = 7, subtract 3 from both sides. Therefore x = 4.'],
+['Indices','An index tells us how many times a number is multiplied by itself. For example, 2³ = 2 × 2 × 2 = 8.'],
+['Surds','A surd is a root that cannot be simplified into a whole number or exact fraction. For example, √2 is a surd.'],
+['Sequences','A sequence is an ordered list of numbers following a pattern. In 2, 4, 6, 8, the common difference is 2.'],
+['Functions','A function connects an input to exactly one output. If f(x)=2x+3, then f(2)=7.']
+]
+},
+{
+name:'ICT & Computing',icon:'💻',category:'Academic',
+description:'Computer systems, hardware, software and networks.',
+topics:[
+['Computer Basics','A computer is an electronic device that accepts data, processes it and produces information.'],
+['Input and Output Devices','Input devices enter data into a computer. Examples include keyboards and mice. Output devices present results, such as monitors and printers.'],
+['Hardware and Software','Hardware refers to physical computer components. Software consists of programs and instructions that tell the hardware what to do.'],
+['Operating Systems','An operating system manages computer hardware, files, memory, applications and user interaction.'],
+['Number Systems','Binary uses digits 0 and 1. Decimal uses digits 0 to 9. Computers use binary to represent data.']
+]
+},
+{
+name:'Physics',icon:'⚛️',category:'Academic',
+description:'Motion, forces, energy and physical measurements.',
+topics:[
+['Measurement','Physical quantities are measured using units. Length is measured in metres, mass in kilograms and time in seconds.'],
+['Motion','Speed is distance travelled divided by time taken. Speed = distance ÷ time.'],
+['Vectors','A vector has both magnitude and direction. Examples include displacement, velocity and force.'],
+['Force','Force is a push or pull. Newton’s second law is F = ma, where m is mass and a is acceleration.'],
+['Energy','Energy is the ability to do work. Common forms include kinetic, potential, thermal and electrical energy.']
+]
+},
+{
+name:'Chemistry',icon:'🧪',category:'Academic',
+description:'Matter, atoms, elements and chemical reactions.',
+topics:[
+['Matter','Matter is anything that has mass and occupies space. The common states are solid, liquid and gas.'],
+['Atoms','An atom is the basic unit of an element. It contains protons, neutrons and electrons.'],
+['Elements and Compounds','An element contains one type of atom. A compound contains two or more elements chemically combined.'],
+['Chemical Reactions','A chemical reaction changes substances into new substances. Reactants form products.'],
+['Acids and Bases','Acids have a pH below 7, neutral substances have pH 7 and bases have pH above 7.']
+]
+},
+{
+name:'Biology',icon:'🧬',category:'Academic',
+description:'Living organisms, cells and biological systems.',
+topics:[
+['Introduction to Biology','Biology is the scientific study of living organisms and their interactions with the environment.'],
+['Cells','The cell is the basic structural and functional unit of life. Plant and animal cells have several structures in common.'],
+['Nutrition','Nutrition is the process by which organisms obtain and use food for energy, growth and repair.'],
+['Respiration','Respiration is the process by which cells release energy from food.'],
+['Classification','Classification groups organisms according to shared characteristics.']
+]
+},
+{
+name:'Business Studies',icon:'📊',category:'Academic',
+description:'Accounting, entrepreneurship and business management.',
+topics:[
+['Introduction to Business','A business provides goods or services to satisfy customer needs and wants.'],
+['Accounting Basics','Accounting involves recording, classifying and summarising financial transactions.'],
+['Assets and Liabilities','Assets are resources owned by a business. Liabilities are amounts the business owes.'],
+['Entrepreneurship','Entrepreneurship involves identifying opportunities and organising resources to create a business.'],
+['Budgeting','A budget estimates income and expenditure over a given period.']
+]
+},
+{
+name:'HTML',icon:'🌍',category:'Programming',
+description:'Build the structure of websites.',
+topics:[
+['Introduction to HTML','HTML stands for HyperText Markup Language. It defines the structure and content of web pages.'],
+['HTML Elements','Elements are created using tags. Examples include h1 for headings, p for paragraphs and a for links.'],
+['HTML Forms','Forms collect information from users using inputs, labels, buttons and other elements.'],
+['HTML Links and Images','The a element creates links. The img element displays images using a source address.']
+]
+},
+{
+name:'CSS',icon:'🎨',category:'Programming',
+description:'Design beautiful and responsive websites.',
+topics:[
+['Introduction to CSS','CSS stands for Cascading Style Sheets. It controls how HTML elements look.'],
+['Colours and Fonts','CSS can change text colour, background colour, font size and font family.'],
+['CSS Layout','Flexbox and Grid help arrange elements into responsive layouts.'],
+['Responsive Design','Responsive design allows a website to adapt to different screen sizes.']
+]
+},
+{
+name:'JavaScript',icon:'⚡',category:'Programming',
+description:'Make websites interactive and dynamic.',
+topics:[
+['Introduction to JavaScript','JavaScript is a programming language used to add interactive behaviour to web pages.'],
+['Variables','Variables store information. JavaScript uses let, const and var to declare variables.'],
+['Conditions','An if statement executes code when a condition is true. Else can handle alternative cases.'],
+['Loops','Loops repeat instructions. Common examples are for loops and while loops.'],
+['Functions','A function is a reusable block of code that performs a task.']
+]
+},
+{
+name:'Python',icon:'🐍',category:'Programming',
+description:'Learn programming and problem solving.',
+topics:[
+['Introduction to Python','Python is a popular programming language known for its readable syntax.'],
+['Variables and Data Types','Variables store data. Common data types include integers, floats, strings and booleans.'],
+['Conditions','Python uses if, elif and else to make decisions in programs.'],
+['Loops','For and while loops repeat instructions in a program.'],
+['Functions','Functions are created using def and help organise reusable code.']
+]
+}
+];
+
+function getCompleted(){
+try{return JSON.parse(localStorage.getItem('ftech_completed')||'[]')}
+catch(e){return []}
+}
+
+function markCompleted(key){
+let completed=getCompleted();
+if(!completed.includes(key))completed.push(key);
+localStorage.setItem('ftech_completed',JSON.stringify(completed));
+refreshLearning();
+}
+
+function refreshLearning(){
+const completed=getCompleted();
+let total=0;
+subjects.forEach(s=>total+=s.topics.length);
+const count=completed.length;
+const percent=Math.round((count/total)*100);
+document.getElementById('lessonCount').textContent=count;
+document.getElementById('progressText').textContent=percent+'% completed';
+document.getElementById('progressFill').style.width=percent+'%';
+const best=Number(localStorage.getItem('ftech_quiz_best')||0);
+document.getElementById('quizBest').textContent=best+'%';
+renderSubjects();
+}
+
+function renderSubjects(filter=''){
+const grid=document.getElementById('subjectGrid');
+grid.innerHTML='';
+const list=subjects.filter(s=>
+(s.name+' '+s.category+' '+s.description).toLowerCase().includes(filter.toLowerCase())
+);
+if(!list.length){
+grid.innerHTML='<div class="notice">No matching subjects found.</div>';
+return;
+}
+list.forEach(subject=>{
+const card=document.createElement('div');
+card.className='card';
+const icon=document.createElement('div');
+icon.className='emoji';icon.textContent=subject.icon;
+const title=document.createElement('h3');title.textContent=subject.name;
+const desc=document.createElement('p');desc.textContent=subject.description;
+const category=document.createElement('small');
+category.style.color='var(--cyan)';
+category.textContent=subject.category+' · '+subject.topics.length+' lessons';
+const btn=document.createElement('button');
+btn.className='btn';btn.textContent='Explore subject';
+btn.onclick=()=>openSubject(subject.name);
+card.append(icon,title,desc,category,document.createElement('br'),btn);
+grid.append(card);
+});
+}
+
+function searchLearning(){
+renderSubjects(document.getElementById('learningSearch').value);
+}
+
+function openSubject(name){
+const subject=subjects.find(s=>s.name===name);
+if(!subject)return;
+const area=document.getElementById('learningContent');
+area.style.display='block';
+area.innerHTML='';
+
+const title=document.createElement('h2');
+title.textContent=subject.icon+' '+subject.name;
+const desc=document.createElement('p');
+desc.textContent=subject.description;
+area.append(title,desc);
+
+subject.topics.forEach((topic,index)=>{
+const box=document.createElement('div');
+box.className='article lesson-topic';
+const left=document.createElement('div');
+const heading=document.createElement('h3');
+heading.textContent=(index+1)+'. '+topic[0];
+const status=document.createElement('small');
+status.style.color='var(--cyan)';
+const key=name+'-'+topic[0];
+status.textContent=getCompleted().includes(key)?'✓ Completed':'Lesson';
+left.append(heading,status);
+const button=document.createElement('button');
+button.className='btn';
+button.textContent='Open lesson';
+button.onclick=()=>openLesson(name,topic[0],topic[1]);
+box.append(left,button);
+area.append(box);
+});
+
+const back=document.createElement('button');
+back.className='btn secondary';
+back.textContent='Back to subjects';
+back.onclick=()=>{
+area.style.display='none';
+document.getElementById('learning').scrollIntoView({behavior:'smooth'});
+};
+area.append(back);
+area.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function openLesson(subject,topic,content){
+const area=document.getElementById('learningContent');
+area.innerHTML='';
+area.style.display='block';
+
+const heading=document.createElement('h2');
+heading.textContent=topic;
+const sub=document.createElement('p');
+sub.textContent=subject+' · Study lesson';
+const explanation=document.createElement('div');
+explanation.className='notice';
+explanation.style.marginTop='15px';
+explanation.style.fontSize='15px';
+explanation.textContent=content;
+
+const key=subject+'-'+topic;
+const complete=document.createElement('button');
+complete.className='btn';
+complete.style.marginTop='16px';
+complete.textContent=getCompleted().includes(key)?'✓ Lesson completed':'Mark as completed';
+complete.onclick=()=>{
+markCompleted(key);
+complete.textContent='✓ Lesson completed';
+};
+
+const back=document.createElement('button');
+back.className='btn secondary';
+back.style.margin='16px 0 0 8px';
+back.textContent='Back to lessons';
+back.onclick=()=>openSubject(subject);
+
+area.append(heading,sub,explanation,complete,back);
+area.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// QUIZ QUESTIONS
+const questions=[
+{q:'What does HTML stand for?',a:['HyperText Markup Language','HighText Machine Language','Hyper Transfer Main Link'],correct:0,subject:'HTML'},
+{q:'Which language is used to style web pages?',a:['Python','CSS','SQL'],correct:1,subject:'CSS'},
+{q:'Which keyword declares a variable in modern JavaScript?',a:['let','print','echo'],correct:0,subject:'JavaScript'},
+{q:'Which symbol is used for multiplication in Python?',a:['x','*','%'],correct:1,subject:'Python'},
+{q:'What is the basic unit of life?',a:['Atom','Cell','Organ'],correct:1,subject:'Biology'},
+{q:'What is the SI unit of force?',a:['Joule','Watt','Newton'],correct:2,subject:'Physics'},
+{q:'What is the chemical symbol for water?',a:['CO2','H2O','O2'],correct:1,subject:'Chemistry'},
+{q:'What is 2³?',a:['6','8','9'],correct:1,subject:'Mathematics'},
+{q:'Binary numbers use which digits?',a:['0 and 1','1 and 2','0 to 9'],correct:0,subject:'ICT'},
+{q:'What is a budget?',a:['A financial plan','A computer program','A type of loan'],correct:0,subject:'Business Studies'}
+];
+
+let quizIndex=0;
+let quizScore=0;
+let quizAnswers=[];
+
+function startQuiz(){
+quizIndex=0;
+quizScore=0;
+quizAnswers=[];
+showPage('learning');
+showQuestion();
+}
+
+function showQuestion(){
+const area=document.getElementById('learningContent');
+area.style.display='block';
+area.innerHTML='';
+
+if(quizIndex>=questions.length){
+showQuizResult();
+return;
+}
+
+const q=questions[quizIndex];
+const heading=document.createElement('h2');
+heading.textContent='Practice Quiz';
+const count=document.createElement('p');
+count.textContent='Question '+(quizIndex+1)+' of '+questions.length+' · '+q.subject;
+const question=document.createElement('h3');
+question.style.marginTop='18px';
+question.textContent=q.q;
+area.append(heading,count,question);
+
+const options=document.createElement('div');
+q.a.forEach((answer,index)=>{
+const btn=document.createElement('button');
+btn.className='quiz-option';
+btn.textContent=String.fromCharCode(65+index)+'. '+answer;
+btn.onclick=()=>{
+if(options.dataset.answered)return;
+options.dataset.answered='yes';
+if(index===q.correct){
+quizScore++;
+btn.classList.add('correct');
+}else{
+btn.classList.add('wrong');
+options.children[q.correct].classList.add('correct');
+}
+const next=document.createElement('button');
+next.className='btn';
+next.style.marginTop='15px';
+next.textContent=quizIndex===questions.length-1?'See results':'Next question';
+next.onclick=()=>{
+quizIndex++;
+showQuestion();
+};
+area.append(next);
+};
+options.append(btn);
+});
+area.append(options);
+area.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function showQuizResult(){
+const area=document.getElementById('learningContent');
+const percent=Math.round((quizScore/questions.length)*100);
+const previous=Number(localStorage.getItem('ftech_quiz_best')||0);
+if(percent>previous)localStorage.setItem('ftech_quiz_best',percent);
+refreshLearning();
+area.innerHTML=`
+<h2>Quiz completed!</h2>
+<p>You have finished the F-TECH practice quiz.</p>
+<div class="stat" style="margin-top:15px">
+<strong>${quizScore}/${questions.length}</strong>
+<span>Your score · ${percent}%</span>
+</div>
+<p style="margin-top:15px">${percent>=80?'Excellent work! Keep learning.':percent>=50?'Good effort! Revise and try again.':'Keep practising. You can improve!'}</p>
+<button class="btn" style="margin-top:15px" onclick="startQuiz()">Try again</button>
+<button class="btn secondary" style="margin:15px 0 0 8px" onclick="openSubject('Mathematics')">Study lessons</button>
+`;
+area.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// DIGITAL TOOLS
+function openTool(type){
+const area=document.getElementById('toolArea');
+area.style.display='block';
+let html='';
+if(type==='budget')html=`<h3>Budget Calculator</h3>
+<div class="field"><label>Total income</label><input id="income" type="number" placeholder="Enter income"></div>
+<div class="field"><label>Total expenses</label><input id="expense" type="number" placeholder="Enter expenses"></div>
+<button class="btn" onclick="calculateBudget()">Calculate</button><div id="toolResult" class="result"></div>`;
+if(type==='password')html=`<h3>Password Generator</h3>
+<div class="field"><label>Password length</label><input id="passLength" type="number" min="6" max="40" value="14"></div>
+<button class="btn" onclick="generatePassword()">Generate password</button><div id="toolResult" class="result"></div>`;
+if(type==='converter')html=`<h3>Length Converter</h3>
+<div class="field"><label>Value in metres</label><input id="metres" type="number" placeholder="Enter metres"></div>
+<button class="btn" onclick="convertUnits()">Convert</button><div id="toolResult" class="result"></div>`;
+if(type==='notes')html=`<h3>Quick Notes</h3>
+<div class="field"><textarea id="noteText" placeholder="Write your note"></textarea></div>
+<button class="btn" onclick="saveNote()">Save note</button><div id="toolResult" class="result"></div>`;
+area.innerHTML=html;
+area.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function calculateBudget(){
+const i=Number(document.getElementById('income').value);
+const e=Number(document.getElementById('expense').value);
+document.getElementById('toolResult').textContent='Remaining balance: '+(i-e).toLocaleString();
+}
+
+function generatePassword(){
+const n=Math.max(6,Math.min(40,Number(document.getElementById('passLength').value)||14));
+const chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%&*';
+let pass='';
+for(let i=0;i<n;i++)pass+=chars[Math.floor(Math.random()*chars.length)];
+const result=document.getElementById('toolResult');
+result.textContent=pass+' ';
+const copy=document.createElement('button');
+copy.className='btn secondary';
+copy.textContent='Copy';
+copy.onclick=()=>navigator.clipboard?.writeText(pass);
+result.append(copy);
+}
+
+function convertUnits(){
+const m=Number(document.getElementById('metres').value);
+document.getElementById('toolResult').textContent=`${m} metres = ${m*100} cm = ${m/1000} km`;
+}
+
+function saveNote(){
+const note=document.getElementById('noteText').value;
+if(!note.trim())return;
+localStorage.setItem('ftech_note',note);
+document.getElementById('toolResult').textContent='Note saved on this device.';
+}
+
+// TECH UPDATES
+function getPosts(){
+try{return JSON.parse(localStorage.getItem('ftech_posts')||'[]')}
+catch(e){return []}
+}
+
+function renderPosts(){
+const area=document.getElementById('articles');
+area.innerHTML='';
+const posts=getPosts();
+if(!posts.length){
+area.innerHTML='<div class="notice">No updates published yet. Check back soon.</div>';
+return;
+}
+posts.slice().reverse().forEach(post=>{
+const article=document.createElement('article');
+article.className='article';
+const date=document.createElement('small');date.textContent=post.date;
+const title=document.createElement('h3');title.textContent=post.title;
+const body=document.createElement('p');body.textContent=post.body;
+article.append(date,title,body);
+area.append(article);
+});
+}
+
+function publishPost(){
+const title=document.getElementById('postTitle').value.trim();
+const body=document.getElementById('postBody').value.trim();
+if(!title||!body){alert('Please enter a title and content.');return}
+const posts=getPosts();
+posts.push({title,body,date:new Date().toLocaleDateString()});
+localStorage.setItem('ftech_posts',JSON.stringify(posts));
+document.getElementById('postTitle').value='';
+document.getElementById('postBody').value='';
+renderPosts();
+alert('Update saved in this browser.');
+}
+
+// OWNER
+function refreshOwner(){
+document.getElementById('visitCount').textContent=localStorage.getItem('ftech_visits')||0;
+document.getElementById('postCount').textContent=getPosts().length;
+}
+
+function contactUs(){
+window.location.href='mailto:mitemafelix5@gmail.com?subject=F-TECH%20Enquiry';
+}
+
+// STARTUP
+localStorage.setItem('ftech_visits',Number(localStorage.getItem('ftech_visits')||0)+1);
+document.getElementById('year').textContent=new Date().getFullYear();
+renderPosts();
+refreshLearning();
+
+</script>
+</body>
+</html>

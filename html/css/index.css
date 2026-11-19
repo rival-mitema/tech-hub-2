@@ -1,0 +1,38 @@
+
+/* F-TECH - Application foundation */
+
+:root {
+  color-scheme: dark;
+  --ft-bg: #071426;
+  --ft-blue: #1685ff;
+  --ft-text: #ffffff;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--ft-bg);
+  color: var(--ft-text);
+  margin: 0;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--ft-blue);
+  color: white;
+}
